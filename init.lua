@@ -34,17 +34,9 @@ require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
   use "lukas-reineke/indent-blankline.nvim"
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
-    require("toggleterm").setup(){
-       size = 20,  -- You can also use a function to dynamically set the terminal size
-       open_mapping = [[<c-\>]],  -- Key mapping to toggle the terminal
-       start_in_insert = true,  -- Open the terminal in insert mode
-       insert_mappings = true,  -- Enable insert mode mappings
-       terminal_mappings = true,  -- Enable terminal mode mappings
-       persist_size = true,  -- Persist the terminal size between sessions
-       direction = 'float',  -- Terminal orientation: 'vertical', 'horizontal', 'float', or 'tab'
-
-    }
+    require("toggleterm").setup()
   end}
+ 
   use {
       "kylechui/nvim-surround",
       tag = "*", -- Use for stability; omit to use `main` branch for the latest features
