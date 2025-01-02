@@ -28,6 +28,7 @@ require('mini.ai').setup()
 --
 
 require('packer').startup(function(use)
+  use 'MunifTanjim/nui.nvim'
   use 'xiyaowong/transparent.nvim'
   use('mrjones2014/smart-splits.nvim')
   use 'wbthomason/packer.nvim'
