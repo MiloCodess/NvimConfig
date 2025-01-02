@@ -28,6 +28,7 @@ require('mini.ai').setup()
 --
 
 require('packer').startup(function(use)
+  use 'xiyaowong/transparent.nvim'
   use('mrjones2014/smart-splits.nvim')
   use 'wbthomason/packer.nvim'
   use 'elihunter173/dirbuf.nvim'
@@ -54,6 +55,20 @@ require('packer').startup(function(use)
   }
   
 end)
+require("transparent").setup({
+  enable = true, -- boolean: enable transparent
+  extra_groups = { -- table/string: additional groups that should be clear
+    -- In this case, we need to specify `cterm` as well
+    -- as `gui` to ensure that it's cleared on all terminals
+    -- this is the default
+    -- "GitGutter",
+    -- "LspDiagnosticsDefaultError",
+    -- "LspDiagnosticsDefaultWarning",
+    -- "LspDiagnosticsDefaultInformation",
+    -- "LspDiagnosticsDefaultHint"
+  },
+  exclude = {}, -- table: groups you don't want to clear
+})
 require("ibl").setup()
 require('smart-splits').setup({
   -- You can customize these options as needed.
