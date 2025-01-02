@@ -32,6 +32,19 @@ require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'elihunter173/dirbuf.nvim'
   use 'nvim-tree/nvim-web-devicons'
+  use "lukas-reineke/indent-blankline.nvim"
+  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+    require("toggleterm").setup(){
+       size = 20,  -- You can also use a function to dynamically set the terminal size
+       open_mapping = [[<c-\>]],  -- Key mapping to toggle the terminal
+       start_in_insert = true,  -- Open the terminal in insert mode
+       insert_mappings = true,  -- Enable insert mode mappings
+       terminal_mappings = true,  -- Enable terminal mode mappings
+       persist_size = true,  -- Persist the terminal size between sessions
+       direction = 'float',  -- Terminal orientation: 'vertical', 'horizontal', 'float', or 'tab'
+
+    }
+  end}
   use {
       "kylechui/nvim-surround",
       tag = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -40,6 +53,7 @@ require('packer').startup(function(use)
       end,
   }
   use 'tpope/vim-sleuth'
+
   use {
     'goolord/alpha-nvim',
     config = function ()
@@ -48,6 +62,7 @@ require('packer').startup(function(use)
   }
   
 end)
+require("ibl").setup()
 require('smart-splits').setup({
   -- You can customize these options as needed.
   default_amount = 3, -- Number of lines/columns to resize by at a time.
