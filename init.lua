@@ -72,6 +72,7 @@ vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
 vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
 vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
+vim.api.nvim_set_keymap('n', '<space>g', ':ToggleTerm size=40 dir=~/Desktop direction=horizontal name=desktop<CR>', { noremap = true, silent = true })
 
 vim.g.mapleader = ' '  -- Set space as the leader key
 vim.api.nvim_set_keymap('n', '<Leader>f', ':lua MiniFiles.open()<CR>', { noremap = true, silent = true })
