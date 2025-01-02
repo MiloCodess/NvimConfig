@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(mini_path) then
   vim.cmd('packadd mini.nvim | helptags ALL')
   vim.cmd('echo "Installed `mini.nvim`" | redraw')
 end
-
+ 
 -- Set up mini.deps
 require('mini.deps').setup({ path = { package = path_package } })
 local add = MiniDeps.add
@@ -72,11 +72,10 @@ vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
 vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
 vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
 
-vim.api.nvim_set_keymap('n', '<space>g', ':ToggleTerm size=40 dir=~/Desktop direction=horizontal name=desktop<CR>', { noremap = true, silent = true })
 
 vim.g.mapleader = ' '  -- Set space as the leader key
 vim.api.nvim_set_keymap('n', '<Leader>f', ':lua MiniFiles.open()<CR>', { noremap = true, silent = true })
 
 
-
+vim.api.nvim_set_keymap('n', '<space>g', ':ToggleTerm size=40 dir=~/Desktop direction=float name=desktop<CR> | startinsert', { noremap = true, silent = true })
 
