@@ -36,6 +36,7 @@ require('packer').startup(function(use)
               timeout = 3000,
           })
       end
+  use "nvim-lua/plenary.nvim"
   use 'MunifTanjim/nui.nvim'
   use 'xiyaowong/transparent.nvim'
   use('mrjones2014/smart-splits.nvim')
@@ -43,6 +44,7 @@ require('packer').startup(function(use)
   use 'elihunter173/dirbuf.nvim'
   use 'nvim-tree/nvim-web-devicons'
   use "lukas-reineke/indent-blankline.nvim"
+  use 'folke/noice.nvim'
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup()
   end}
@@ -70,6 +72,31 @@ require('packer').startup(function(use)
         end,
     }
 end)
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "python", "javascript", "lua" }, -- Add your languages here
+  highlight = {
+    enable = true,                -- Enable Tree-sitter highlighting
+    additional_vim_regex_highlighting = false, -- Disable default regex-based highlighting
+  },
+}
+require("noice").setup({
+  lsp = {
+    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+    override = {
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+      ["vim.lsp.util.stylize_markdown"] = true,
+      ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+    },
+  },
+  -- you can enable a preset for easier configuration
+  presets = {
+    bottom_search = true, -- use a classic bottom cmdline for search
+    command_palette = true, -- position the cmdline and popupmenu together
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+    lsp_doc_border = false, -- add a border to hover docs and signature help
+  },
+})
 require("transparent").setup({
   enable = true, -- boolean: enable transparent
   extra_groups = { -- table/string: additional groups that should be clear
@@ -113,3 +140,14 @@ vim.api.nvim_set_keymap('n', '<space>g', ':ToggleTerm size=40 dir=~/Desktop dire
 
 require("notify")("My super important message")
 vim.notify = require("notify")
+
+-- Set custom Tree-sitter highlight colors
+vim.api.nvim_set_hl(0, "TSFunction", { fg = "#EE8B8E", bold = true }) -- Functions in gold
+vim.api.nvim_set_hl(0, "TSKeyword", { fg = "#D8627C", italic = true }) -- Keywords in orange
+vim.api.nvim_set_hl(0, "TSString", { fg = "#8DD0D9" }) -- Strings in green
+vim.api.nvim_set_hl(0, "TSComment", { fg = "#AF95B0", italic = true }) -- Comments in gray
+vim.api.nvim_set_hl(0, "TSVariable", { fg = "#39BFD8" }) -- Variables in light blue
+vim.api.nvim_set_hl(0, "TSConstant", { fg = "#E7B59E" }) -- Constants in tomato red
+
+
+vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>")

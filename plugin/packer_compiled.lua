@@ -90,6 +90,11 @@ _G.packer_plugins = {
     path = "/Users/miloarjana/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
+  ["noice.nvim"] = {
+    loaded = true,
+    path = "/Users/miloarjana/.local/share/nvim/site/pack/packer/start/noice.nvim",
+    url = "https://github.com/folke/noice.nvim"
+  },
   ["nui.nvim"] = {
     loaded = true,
     path = "/Users/miloarjana/.local/share/nvim/site/pack/packer/start/nui.nvim",
@@ -120,6 +125,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/miloarjana/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/Users/miloarjana/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["smart-splits.nvim"] = {
     loaded = true,
