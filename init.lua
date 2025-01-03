@@ -31,6 +31,7 @@ add({
 
 require("mini.files").setup()
 require("mini.ai").setup()
+vim.g.mapleader = " " -- Set space as the leader key
 
 -- ===========================================
 -- Packer Plugin Management
@@ -140,7 +141,11 @@ vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
 vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
 vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
 
-vim.keymap.set("n", "<Leader>f", ":lua MiniFiles.open()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>f", function()
+	print("MiniFiles.open() triggered")
+	require("mini.files").open()
+end, { noremap = true, silent = true })
+
 vim.keymap.set(
 	"n",
 	"<space>g",
@@ -152,7 +157,7 @@ vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>")
 -- ===========================================
 -- Additional Settings
 -- ===========================================
-vim.g.mapleader = " "
+
 vim.opt.termguicolors = true
 vim.notify = require("notify")
 
