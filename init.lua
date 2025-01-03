@@ -28,6 +28,14 @@ require('mini.ai').setup()
 --
 
 require('packer').startup(function(use)
+  use 'rcarriga/nvim-notify'
+      config = function()
+          require("notify").setup({
+              stages = "fade_in_slide_out",
+              background_colour = 'FloatShadow',
+              timeout = 3000,
+          })
+      end
   use 'MunifTanjim/nui.nvim'
   use 'xiyaowong/transparent.nvim'
   use('mrjones2014/smart-splits.nvim')
@@ -54,7 +62,13 @@ require('packer').startup(function(use)
         require'alpha'.setup(require'alpha.themes.dashboard'.config)
     end
   }
-  
+  use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function()
+            local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+            ts_update()
+        end,
+    }
 end)
 require("transparent").setup({
   enable = true, -- boolean: enable transparent
@@ -93,5 +107,9 @@ vim.g.mapleader = ' '  -- Set space as the leader key
 vim.api.nvim_set_keymap('n', '<Leader>f', ':lua MiniFiles.open()<CR>', { noremap = true, silent = true })
 
 
+vim.opt.termguicolors = true
+
 vim.api.nvim_set_keymap('n', '<space>g', ':ToggleTerm size=40 dir=~/Desktop direction=float name=desktop<CR> | startinsert', { noremap = true, silent = true })
 
+require("notify")("My super important message")
+vim.notify = require("notify")
