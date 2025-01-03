@@ -43,6 +43,7 @@ require("packer").startup(function(use)
 		tag = "0.1.8",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+	use("nvim-telescope/telescope-ui-select.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("MunifTanjim/nui.nvim")
 	use("xiyaowong/transparent.nvim")
@@ -51,7 +52,10 @@ require("packer").startup(function(use)
 	use("elihunter173/dirbuf.nvim")
 	use("nvim-tree/nvim-web-devicons")
 	use("lukas-reineke/indent-blankline.nvim")
-	use("folke/noice.nvim")
+	use({
+		"folke/noice.nvim",
+		requires = { "nvim-telescope/telescope.nvim" },
+	})
 	use({
 		"akinsho/toggleterm.nvim",
 		tag = "*",
@@ -79,6 +83,11 @@ require("packer").startup(function(use)
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 	})
+	require("nvim-treesitter.configs").setup({
+		ensure_installed = { "c", "python", "javascript", "lua" },
+		highlight = { enable = true, additional_vim_regex_highlighting = true },
+	})
+
 	use({
 		"stevearc/conform.nvim",
 		config = function()
@@ -95,20 +104,31 @@ require("nvim-treesitter.configs").setup({
 	highlight = { enable = true, additional_vim_regex_highlighting = false },
 })
 
-require("noice").setup({
-	lsp = {
-		override = {
-			["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-			["vim.lsp.util.stylize_markdown"] = true,
-			["cmp.entry.get_documentation"] = true,
+require("telescope").setup({
+	extensions = {
+		["ui-select"] = {
+			-- Optionally customize the display options
+			-- e.g., themes, custom displays, etc.
+			-- you can refer to the readme for specific configurations
 		},
 	},
-	presets = {
-		bottom_search = true,
-		command_palette = true,
-		long_message_to_split = true,
-		inc_rename = false,
-		lsp_doc_border = false,
+})
+
+require("noice").setup({
+	cmdline = {
+		view = "cmdline_popup", -- use a popup for the command line
+		format = {
+			cmdline = { pattern = "^:", icon = ">", lang = "vim" },
+		},
+	},
+	popupmenu = {
+		backend = "telescope", -- use telescope for dropdown suggestions
+	},
+})
+require("telescope").setup({
+	defaults = {
+		layout_strategy = "horizontal",
+		sorting_strategy = "ascending",
 	},
 })
 
@@ -127,6 +147,8 @@ require("conform").setup({
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 	},
 })
+require("telescope").load_extension("noice")
+require("telescope").load_extension("ui-select")
 
 -- ===========================================
 -- Keybindings
@@ -180,3 +202,6 @@ vim.api.nvim_set_hl(0, "TSString", { fg = "#8DD0D9" })
 vim.api.nvim_set_hl(0, "TSComment", { fg = "#AF95B0", italic = true })
 vim.api.nvim_set_hl(0, "TSVariable", { fg = "#39BFD8" })
 vim.api.nvim_set_hl(0, "TSConstant", { fg = "#E7B59E" })
+
+colorscheme = mycolors
+vim.cmd("colorscheme mycolors")
