@@ -71,12 +71,43 @@ require("packer").startup(function(use)
 		end,
 	})
 	use("tpope/vim-sleuth")
+
+	local function centerText(text, width)
+		local totalPadding = width - #text
+		local leftPadding = math.floor(totalPadding / 2)
+		local rightPadding = totalPadding - leftPadding
+		return string.rep(" ", leftPadding) .. text .. string.rep(" ", rightPadding)
+	end
 	use({
 		"goolord/alpha-nvim",
+		requires = { "nvim-tree/nvim-web-devicons" }, -- Optional dependency for icons
 		config = function()
-			require("alpha").setup(require("alpha.themes.dashboard").config)
+			local alpha = require("alpha")
+			local dashboard = require("alpha.themes.dashboard")
+			dashboard.section.header.val = {
+
+				[[       	 █████                             ]],
+				[[        	████  ██                           ]],
+				[[              ████  ██   ██████   ████  ███   ]],
+				[[              	███████   ███  ███  ██████ ███   ]],
+				[[               ██        ███  ███  ███ ██████  ]],
+				[[	 	██          ██████   ███  ████   ]],
+				[[              ██                                  ]],
+				[[	     ██        󰹞󰹞󰹞      █  █     ]],
+				[[                          █         █  █      ]],
+				[[	                 █         █    █      ]],
+				[[	                   󰹞󰹞󰹞       █    █      ]],
+				[[     󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞    ]],
+			}
+			dashboard.section.buttons.val = {
+				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+				dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+			}
+			alpha.setup(dashboard.config)
 		end,
 	})
+
+	-- Set header (ASCII art)
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		run = function()
