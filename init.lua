@@ -97,7 +97,7 @@ require("packer").startup(function(use)
 				[[                          █         █  █      ]],
 				[[	                 █         █    █      ]],
 				[[	                   󰹞󰹞󰹞       █    █      ]],
-				[[     󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞    ]],
+				[[        󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞 ]],
 			}
 			dashboard.section.buttons.val = {
 				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
