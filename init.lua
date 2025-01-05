@@ -38,6 +38,7 @@ vim.g.mapleader = " " -- Set space as the leader key
 -- ===========================================
 require("packer").startup(function(use)
 	use("rcarriga/nvim-notify")
+	use("xiyaowong/transparent.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.8",
@@ -118,6 +119,7 @@ require("packer").startup(function(use)
 		ensure_installed = { "c", "python", "javascript", "lua" },
 		highlight = { enable = true, additional_vim_regex_highlighting = true },
 	})
+	require("transparent").setup({ enable = true, extra_groups = {}, exclude = {} })
 
 	use({
 		"stevearc/conform.nvim",
