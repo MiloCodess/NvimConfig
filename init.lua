@@ -31,14 +31,15 @@ add({
 
 require("mini.files").setup()
 require("mini.ai").setup()
+
 vim.g.mapleader = " " -- Set space as the leader key
 
 -- ===========================================
 -- Packer Plugin Management
 -- ===========================================
 require("packer").startup(function(use)
+	use("lewis6991/gitsigns.nvim")
 	use("rcarriga/nvim-notify")
-	use("xiyaowong/transparent.nvim")
 	use({
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.8",
@@ -53,6 +54,7 @@ require("packer").startup(function(use)
 	use("elihunter173/dirbuf.nvim")
 	use("nvim-tree/nvim-web-devicons")
 	use("lukas-reineke/indent-blankline.nvim")
+	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 	use({
 		"folke/noice.nvim",
 		requires = { "nvim-telescope/telescope.nvim" },
@@ -64,6 +66,12 @@ require("packer").startup(function(use)
 			require("toggleterm").setup()
 		end,
 	})
+
+
+
+
+
+
 	use({
 		"kylechui/nvim-surround",
 		tag = "*",
@@ -115,6 +123,8 @@ require("packer").startup(function(use)
 			require("nvim-treesitter.install").update({ with_sync = true })
 		end,
 	})
+	-- require this lua file somewhere in your `init.vim`, or use `:lua`
+
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = { "c", "python", "javascript", "lua" },
 		highlight = { enable = true, additional_vim_regex_highlighting = true },
@@ -127,6 +137,16 @@ require("packer").startup(function(use)
 			require("conform").setup()
 		end,
 	})
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v3.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+			-- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+		},
+	})
 end)
 
 -- ===========================================
@@ -136,7 +156,9 @@ require("nvim-treesitter.configs").setup({
 	ensure_installed = { "c", "python", "javascript", "lua" },
 	highlight = { enable = true, additional_vim_regex_highlighting = false },
 })
-
+require("gitsigns").setup({
+	current_line_blame = true,
+})
 require("telescope").setup({
 	extensions = {
 		["ui-select"] = {
@@ -146,7 +168,7 @@ require("telescope").setup({
 		},
 	},
 })
-
+require("ibl").setup()
 require("noice").setup({
 	cmdline = {
 		view = "cmdline_popup", -- use a popup for the command line
@@ -165,8 +187,6 @@ require("telescope").setup({
 	},
 })
 
-require("transparent").setup({ enable = true, extra_groups = {}, exclude = {} })
-
 require("smart-splits").setup({
 	default_amount = 3,
 	at_edge = "wrap",
@@ -180,12 +200,15 @@ require("conform").setup({
 		javascript = { "prettierd", "prettier", stop_after_first = true },
 	},
 })
+
 require("telescope").load_extension("noice")
 require("telescope").load_extension("ui-select")
 
--- ===========================================
--- Keybindings
--- ===========================================
+-- Enable the LSP server for Python (pyright)
+
+
+-- Keybindwdwddings
+-- ====================================
 vim.keymap.set("n", "<A-h>", require("smart-splits").resize_left)
 vim.keymap.set("n", "<A-j>", require("smart-splits").resize_down)
 vim.keymap.set("n", "<A-k>", require("smart-splits").resize_up)
@@ -214,6 +237,7 @@ vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>")
 -- ===========================================
 
 vim.opt.termguicolors = true
+require("bufferline").setup({})
 vim.notify = require("notify")
 
 -- ===========================================
