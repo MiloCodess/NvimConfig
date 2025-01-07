@@ -146,34 +146,23 @@ require("packer").startup(function(use)
 		return string.rep(" ", leftPadding) .. text .. string.rep(" ", rightPadding)
 	end
 	use({
-		"goolord/alpha-nvim",
-		requires = { "nvim-tree/nvim-web-devicons" }, -- Optional dependency for icons
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
 		config = function()
-			local alpha = require("alpha")
-			local dashboard = require("alpha.themes.dashboard")
-			dashboard.section.header.val = {
-
-				[[       	 █████                             ]],
-				[[        	████  ██                           ]],
-				[[              ████  ██   ██████   ████  ███   ]],
-				[[              	███████   ███  ███  ██████ ███   ]],
-				[[               ██        ███  ███  ███ ██████  ]],
-				[[	 	██          ██████   ███  ████   ]],
-				[[              ██                                  ]],
-				[[	     ██        󰹞󰹞󰹞      █  █     ]],
-				[[                          █         █  █      ]],
-				[[	                 █         █    █      ]],
-				[[	                   󰹞󰹞󰹞       █    █      ]],
-				[[        󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞 ]],
-			}
-			dashboard.section.buttons.val = {
-				dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-				dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
-			}
-			alpha.setup(dashboard.config)
+			require("dashboard").setup({
+				theme = "hyper",
+				header = {
+					"   __  __ _       _     _ _         _",
+					"  |  \\/  (_)     (_)   | (_)       | |",
+					"  | \\  / |_ _ __  _ ___| |_ _______| |",
+					"  | |\\/| | | '_ \\| / __| | |_  /_  / |",
+					"  | |  | | | | | | \\__ \\ | |/ / / /| |",
+					"  |_|  |_|_|_| |_|_|___/_|_/___/___|_|",
+				},
+			})
 		end,
+		requires = { "nvim-tree/nvim-web-devicons" },
 	})
-
 	-- Set header (ASCII art)
 	use({
 		"nvim-treesitter/nvim-treesitter",
@@ -313,6 +302,11 @@ vim.keymap.set("n", "<leader>nd", "<cmd>NoiceDismiss<CR>")
 -- ===========================================
 -- Additional Settings
 -- ===========================================
+require("ibl").setup({
+	exclude = {
+		filetypes = { "dashboard" }, -- Add your dashboard filetype here
+	},
+})
 
 vim.opt.termguicolors = true
 require("bufferline").setup({})
