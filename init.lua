@@ -50,6 +50,7 @@ require("packer").startup(function(use)
 		tag = "0.1.8",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
+	use({ "itchyny/calendar.vim" })
 	use("nvim-telescope/telescope-ui-select.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("MunifTanjim/nui.nvim")
@@ -147,20 +148,6 @@ require("packer").startup(function(use)
 	end
 	use({
 		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		config = function()
-			require("dashboard").setup({
-				theme = "hyper",
-				header = {
-					"   __  __ _       _     _ _         _",
-					"  |  \\/  (_)     (_)   | (_)       | |",
-					"  | \\  / |_ _ __  _ ___| |_ _______| |",
-					"  | |\\/| | | '_ \\| / __| | |_  /_  / |",
-					"  | |  | | | | | | \\__ \\ | |/ / / /| |",
-					"  |_|  |_|_|_| |_|_|___/_|_/___/___|_|",
-				},
-			})
-		end,
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
 	-- Set header (ASCII art)
@@ -171,6 +158,21 @@ require("packer").startup(function(use)
 		end,
 	})
 	-- require this lua file somewhere in your `init.vim`, or use `:lua`
+	use({
+		"epwalsh/obsidian.nvim",
+		tag = "*", -- Use the latest release
+		requires = {
+			"nvim-lua/plenary.nvim", -- Required dependency
+		},
+		opts = {
+			workspaces = {
+				{
+					name = "NVIM",
+					path = "/Users/miloarjana/Documents/NVIM", -- Path to your vault
+				},
+			},
+		},
+	})
 
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = { "c", "python", "javascript", "lua" },
@@ -207,6 +209,17 @@ require("packer").startup(function(use)
 				-- Leave it empty to use the default settings
 			})
 		end,
+	})
+	use({
+		"hrsh7th/nvim-cmp",
+		requires = {
+			"hrsh7th/cmp-nvim-lsp", -- LSP source for nvim-cmp
+			"hrsh7th/cmp-buffer", -- Buffer completions
+			"hrsh7th/cmp-path", -- Path completions
+			"hrsh7th/cmp-cmdline", -- Cmdline completions
+			"hrsh7th/vim-vsnip", -- Snippet engine
+			"hrsh7th/cmp-vsnip", -- Snippet completions
+		},
 	})
 end)
 
@@ -272,6 +285,32 @@ require("conform").setup({
 require("telescope").load_extension("noice")
 require("telescope").load_extension("ui-select")
 
+require("dashboard").setup({
+	theme = "hyper", -- or 'doom' depending on preference
+	config = {
+		header = {
+			"	     █████                           ",
+			"        ████  ██                            ",
+			"       ████  ██   ██████   ████  ███    ",
+			"        ███████   ███  ███  ██████ ███    ",
+			"        ██        ███  ███  ███ ██████   ",
+			"        ██          ██████   ███  ████    ",
+			"       ██                                   ",
+			"     ██        󰹞󰹞󰹞      █  █      ",
+			"                   █         █  █       ",
+			"                 █         █    █       ",
+			"                   󰹞󰹞󰹞       █    █       ",
+			"  󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞󰹞  ",
+		},
+		shortcut = {
+			{ desc = " Find Files", group = "@property", action = "Telescope find_files", key = "f" },
+			{ desc = " Edit Config", group = "Number", action = "edit $MYVIMRC", key = "e" },
+			{ desc = "󰊳 Update Plugins", group = "@variable", action = "Lazy update", key = "u" },
+		},
+		footer = { "LESS IS MORE" },
+	},
+})
+
 -- Enable the LSP server for Python (pyright)
 
 -- Keybindwdwddings
@@ -307,11 +346,36 @@ require("ibl").setup({
 		filetypes = { "dashboard" }, -- Add your dashboard filetype here
 	},
 })
+local cmp = require("cmp")
+
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body) -- For vsnip users.
+		end,
+	},
+	mapping = cmp.mapping.preset.insert({
+		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+		["<C-f>"] = cmp.mapping.scroll_docs(4),
+		["<C-Space>"] = cmp.mapping.complete(),
+		["<C-e>"] = cmp.mapping.abort(),
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "vsnip" },
+	}, {
+		{ name = "buffer" },
+	}),
+})
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+require("lspconfig")["pyright"].setup({
+	capabilities = capabilities,
+})
 
 vim.opt.termguicolors = true
 require("bufferline").setup({})
 vim.notify = require("notify")
-
 -- ===========================================
 -- Autocommands
 -- ===========================================
@@ -331,3 +395,13 @@ vim.api.nvim_set_hl(0, "TSString", { fg = "#8DD0D9" })
 vim.api.nvim_set_hl(0, "TSComment", { fg = "#AF95B0", italic = true })
 vim.api.nvim_set_hl(0, "TSVariable", { fg = "#39BFD8" })
 vim.api.nvim_set_hl(0, "TSConstant", { fg = "#E7B59E" })
+
+vim.api.nvim_set_hl(0, "DashboardHeader", { fg = "#39bfd8" })
+
+vim.api.nvim_set_hl(0, "Beige", { fg = "#e7b59e" }) -- Beige
+vim.api.nvim_set_hl(0, "DarkBlue", { fg = "#39bfd8" }) -- DarkBlue
+vim.api.nvim_set_hl(0, "LightBlue", { fg = "#8dd0d9" }) -- LightBlue
+
+vim.api.nvim_set_hl(0, "Pink", { fg = "#ee8b8e" }) -- Pink
+vim.api.nvim_set_hl(0, "DarkPink", { fg = "#d8627c" }) -- DarkPink
+vim.api.nvim_set_hl(0, "Purple", { fg = "#af95b0" }) -- Purple
