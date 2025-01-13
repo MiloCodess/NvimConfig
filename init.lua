@@ -50,7 +50,12 @@ require("packer").startup(function(use)
 		tag = "0.1.8",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
-	use({ "itchyny/calendar.vim" })
+	use({
+		"itchyny/calendar.vim",
+		config = function()
+			vim.cmd("source ~/.cache/calendar.vim/credentials.vim") -- Source the credentials file
+		end,
+	})
 	use("nvim-telescope/telescope-ui-select.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("MunifTanjim/nui.nvim")
@@ -160,20 +165,26 @@ require("packer").startup(function(use)
 	-- require this lua file somewhere in your `init.vim`, or use `:lua`
 	use({
 		"epwalsh/obsidian.nvim",
-		tag = "*", -- Use the latest release
+		tag = "*", -- recommended, use latest release instead of latest commit
 		requires = {
-			"nvim-lua/plenary.nvim", -- Required dependency
-		},
-		opts = {
-			workspaces = {
-				{
-					name = "NVIM",
-					path = "/Users/miloarjana/Documents/NVIM", -- Path to your vault
-				},
-			},
-		},
-	})
+			-- Required.
+			"nvim-lua/plenary.nvim",
 
+			-- see below for full list of optional dependencies 👇
+		},
+		config = function()
+			require("obsidian").setup({
+				workspaces = {
+					{
+						name = "classes",
+						path = "/Users/miloarjana/vaults/classes",
+					},
+				},
+
+				-- see below for full list of options 👇
+			})
+		end,
+	})
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = { "c", "python", "javascript", "lua" },
 		highlight = { enable = true, additional_vim_regex_highlighting = true },
@@ -385,7 +396,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		require("conform").format({ bufnr = args.buf })
 	end,
 })
-
 -- ===========================================
 -- Custom Highlights
 -- ===========================================
@@ -405,3 +415,8 @@ vim.api.nvim_set_hl(0, "LightBlue", { fg = "#8dd0d9" }) -- LightBlue
 vim.api.nvim_set_hl(0, "Pink", { fg = "#ee8b8e" }) -- Pink
 vim.api.nvim_set_hl(0, "DarkPink", { fg = "#d8627c" }) -- DarkPink
 vim.api.nvim_set_hl(0, "Purple", { fg = "#af95b0" }) -- Purple
+
+vim.g.calendar_google_calendar = 1
+vim.g.calendar_google_task = 1
+
+vim.o.conceallevel = 1 -- You can also use 2 for more concealment
