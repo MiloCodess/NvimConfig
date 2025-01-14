@@ -39,6 +39,7 @@ require("lspconfig").pyright.setup({})
 -- Packer Plugin Management
 -- ===========================================
 require("packer").startup(function(use)
+	use("nvim-tree/nvim-web-devicons")
 	use("lewis6991/gitsigns.nvim")
 	use("rcarriga/nvim-notify")
 	use({
@@ -56,6 +57,13 @@ require("packer").startup(function(use)
 			vim.cmd("source ~/.cache/calendar.vim/credentials.vim") -- Source the credentials file
 		end,
 	})
+	use({
+		"glepnir/galaxyline.nvim",
+		branch = "main",
+		-- your statusline
+		-- some optional icons
+		requires = { "nvim-tree/nvim-web-devicons", opt = true },
+	})
 	use("nvim-telescope/telescope-ui-select.nvim")
 	use("nvim-lua/plenary.nvim")
 	use("MunifTanjim/nui.nvim")
@@ -63,8 +71,24 @@ require("packer").startup(function(use)
 	use("mrjones2014/smart-splits.nvim")
 	use("wbthomason/packer.nvim")
 	use("elihunter173/dirbuf.nvim")
-	use("nvim-tree/nvim-web-devicons")
 	use("lukas-reineke/indent-blankline.nvim")
+	use("honza/vim-snippets")
+	use({
+		"rareitems/anki.nvim",
+		config = function()
+			require("anki").setup({
+				-- this function will add support for associating '.anki' extension with both 'anki' and 'tex' filetype.
+				tex_support = false,
+				models = {
+					-- Here you specify which notetype should be associated with which deck
+					NoteType = "PathToDeck",
+					["Basic"] = "Deck",
+					["Super Basic"] = "Deck::ChildDeck",
+				},
+				-- linters = require("anki.linters").default_linters();
+			})
+		end,
+	})
 	use({ "akinsho/bufferline.nvim", tag = "*", requires = "nvim-tree/nvim-web-devicons" })
 	use({
 		"utilyre/barbecue.nvim",
@@ -179,6 +203,11 @@ require("packer").startup(function(use)
 						name = "classes",
 						path = "/Users/miloarjana/vaults/classes",
 					},
+				},
+				templates = {
+					folder = "my-templates-folder",
+					date_format = "%Y-%m-%d-%a",
+					time_format = "%H:%M",
 				},
 
 				-- see below for full list of options 👇
