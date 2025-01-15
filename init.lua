@@ -73,6 +73,10 @@ require("packer").startup(function(use)
 	use("elihunter173/dirbuf.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("honza/vim-snippets")
+
+	use("lervag/vimtex")
+	use("KeitaNakamura/tex-conceal.vim")
+	use("dylanaraps/wal")
 	use({
 		"rareitems/anki.nvim",
 		config = function()
@@ -209,6 +213,9 @@ require("packer").startup(function(use)
 					date_format = "%Y-%m-%d-%a",
 					time_format = "%H:%M",
 				},
+				note_id_func = function(title)
+					return title
+				end,
 
 				-- see below for full list of options 👇
 			})
@@ -449,3 +456,18 @@ vim.g.calendar_google_calendar = 1
 vim.g.calendar_google_task = 1
 
 vim.o.conceallevel = 1 -- You can also use 2 for more concealment
+
+-- UltiSnips settings
+vim.g.UltiSnipsExpandTrigger = "<tab>"
+vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+-- VimTeX settings
+vim.g.tex_flavor = "latex"
+vim.g.vimtex_view_method = "zathura"
+vim.g.vimtex_quickfix_mode = 0
+
+-- Tex Conceal settings
+vim.o.conceallevel = 1
+vim.g.tex_conceal = "abdmg"
+vim.cmd([[hi Conceal ctermbg=none]])
