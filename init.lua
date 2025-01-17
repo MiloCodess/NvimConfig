@@ -499,4 +499,4 @@ vim.api.nvim_buf_set_keymap(0, "n", "<Leader>]", ":NextLatexPreviewMode<CR>", { 
 
 vim.g.vimtex_compiler_progname = "latex"
 vim.g.vimtex_view_method = "skim"
-vim.g.vimtex_compiler_latexmk = { build_dir = "build" }
+
