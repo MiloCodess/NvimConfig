@@ -75,7 +75,6 @@ require("packer").startup(function(use)
 	use("honza/vim-snippets")
 	use("SirVer/ultisnips")
 	use("xuhdev/vim-latex-live-preview")
-	use("lervag/vimtex")
 	use({
 		"lervag/vimtex",
 		config = function()
@@ -83,7 +82,11 @@ require("packer").startup(function(use)
 			vim.g.vimtex_compiler_method = "latexmk"
 		end,
 	})
-
+	use({
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
 	use("KeitaNakamura/tex-conceal.vim")
 	use("dylanaraps/wal")
 	use({
@@ -380,6 +383,9 @@ vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
 vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
 vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
 vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
+vim.api.nvim_set_keymap("n", "<Leader>w", ":Dashboard<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>q", ":term<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>e", ":PackerSync<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "<Leader>f", function()
 	print("MiniFiles.open() triggered")
@@ -500,3 +506,63 @@ vim.api.nvim_buf_set_keymap(0, "n", "<Leader>]", ":NextLatexPreviewMode<CR>", { 
 vim.g.vimtex_compiler_progname = "latex"
 vim.g.vimtex_view_method = "skim"
 
+local harpoon = require("harpoon")
+
+-- REQUIRED
+harpoon:setup()
+-- REQUIRED
+
+vim.keymap.set("n", "<leader>a", function()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<C-e>", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+vim.keymap.set("n", "<C-h>", function()
+	harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<C-t>", function()
+	harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<C-n>", function()
+	harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<C-s>", function()
+	harpoon:list():select(4)
+end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-S-P>", function()
+	harpoon:list():prev()
+end)
+vim.keymap.set("n", "<C-S-N>", function()
+	harpoon:list():next()
+end)
+
+local harpoon = require("harpoon")
+harpoon:setup({})
+
+-- basic telescope configuration
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+	local file_paths = {}
+	for _, item in ipairs(harpoon_files.items) do
+		table.insert(file_paths, item.value)
+	end
+
+	require("telescope.pickers")
+		.new({}, {
+			prompt_title = "Harpoon",
+			finder = require("telescope.finders").new_table({
+				results = file_paths,
+			}),
+			previewer = conf.file_previewer({}),
+			sorter = conf.generic_sorter({}),
+		})
+		:find()
+end
+
+vim.keymap.set("n", "<C-e>", function()
+	toggle_telescope(harpoon:list())
+end, { desc = "Open harpoon window" })
