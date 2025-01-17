@@ -1,0 +1,19 @@
+# Fdb version 4
+["pdflatex"] 1737133781.03041 "tester.tex" "tester.pdf" "tester" 1737133781.26827 2
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls" 1705352648 20144 147463a6a579f4597269ef9565205cfe ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/base/size10.clo" 1705352648 8448 dbc0dbf4156c0bb9ba01a1c685d3bad0 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1708463273 30006 3d512c0edd558928ddea1690180ef77e ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/l3kernel/expl3.sty" 1708463273 6565 10e89ed128ccd59431746bbdd82129fc ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty" 1708376303 4674 4240ebde863d19dc4d13bb280b78abb2 ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/lipsum/lipsum.ltd.tex" 1632168149 95525 6fd0552101a6b1f9b7a84b402ec435ba ""
+  "/usr/local/texlive/2024/texmf-dist/tex/latex/lipsum/lipsum.sty" 1632168149 14690 c2c754218a7108db7823a4839c1bc3cd ""
+  "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1708706663 41649 5d6ae549fbbcb850a863f69aa41f3d10 ""
+  "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1737036887 8221425 ec1b591fa3dfd0843b34949ce054ccf9 ""
+  "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
+  "tester.aux" 1737133781.25813 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "tester.tex" 1737133779.08878 120 ad81c0f978679cef52e7d40f90352009 ""
+  (generated)
+  "tester.aux"
+  "tester.log"
+  "tester.pdf"
+  (rewritten before read)

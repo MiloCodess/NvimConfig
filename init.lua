@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(mini_path) then
 		"clone",
 		"--filter=blob:none",
 		"https://github.com/echasnovski/mini.nvim",
-		mini_path,
+		mini_paths,
 	}
 	vim.fn.system(clone_cmd)
 	vim.cmd("packadd mini.nvim | helptags ALL")
@@ -73,8 +73,17 @@ require("packer").startup(function(use)
 	use("elihunter173/dirbuf.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("honza/vim-snippets")
-
+	use("SirVer/ultisnips")
+	use("xuhdev/vim-latex-live-preview")
 	use("lervag/vimtex")
+	use({
+		"lervag/vimtex",
+		config = function()
+			vim.g.vimtex_view_method = "skim"
+			vim.g.vimtex_compiler_method = "latexmk"
+		end,
+	})
+
 	use("KeitaNakamura/tex-conceal.vim")
 	use("dylanaraps/wal")
 	use({
@@ -464,10 +473,30 @@ vim.g.UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 -- VimTeX settings
 vim.g.tex_flavor = "latex"
-vim.g.vimtex_view_method = "zathura"
+vim.g.vimtex_view_method = "skim"
 vim.g.vimtex_quickfix_mode = 0
+vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_view_skim_sync = 1
+vim.g.vimtex_view_skim_activate = 1
 
 -- Tex Conceal settings
 vim.o.conceallevel = 1
 vim.g.tex_conceal = "abdmg"
 vim.cmd([[hi Conceal ctermbg=none]])
+vim.g.vimtex_view_enabled = 1
+vim.g.vimtex_compiler_method = "latexmk"
+
+-- General viewer settings for MuPDF
+vim.g.vimtex_view_general_viewer = "mupdf"
+vim.g.vimtex_view_general_options = "@pdf"
+
+vim.g.python3_host_prog = "/Users/miloarjana/virt/bin/python3"
+vim.g.vimtex_main_file = "/Users/miloarjana/.config/nvim/UltiSnips/tester.tex"
+
+vim.api.nvim_buf_set_keymap(0, "n", "<Leader>p", ":LatexPreviewToggle<CR>", { noremap = true, silent = true })
+vim.api.nvim_buf_set_keymap(0, "n", "<Leader>[", ":PrevLatexPreviewMode<CR>", { noremap = true, silent = true })
+vim.api.nvim_buf_set_keymap(0, "n", "<Leader>]", ":NextLatexPreviewMode<CR>", { noremap = true, silent = true })
+
+vim.g.vimtex_compiler_progname = "latex"
+vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_compiler_latexmk = { build_dir = "build" }
