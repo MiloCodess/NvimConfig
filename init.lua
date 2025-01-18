@@ -75,6 +75,7 @@ require("packer").startup(function(use)
 	use("honza/vim-snippets")
 	use("SirVer/ultisnips")
 	use("xuhdev/vim-latex-live-preview")
+	use("mbbill/undotree")
 	use({
 		"lervag/vimtex",
 		config = function()
@@ -384,8 +385,10 @@ vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
 vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
 vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
 vim.api.nvim_set_keymap("n", "<Leader>w", ":Dashboard<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<Leader>q", ":term<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Leader>e", ":PackerSync<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<Leader>q", ":w<CR>:term<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 vim.keymap.set("n", "<Leader>f", function()
 	print("MiniFiles.open() triggered")
@@ -502,6 +505,8 @@ vim.g.vimtex_main_file = "/Users/miloarjana/.config/nvim/UltiSnips/tester.tex"
 vim.api.nvim_buf_set_keymap(0, "n", "<Leader>p", ":LatexPreviewToggle<CR>", { noremap = true, silent = true })
 vim.api.nvim_buf_set_keymap(0, "n", "<Leader>[", ":PrevLatexPreviewMode<CR>", { noremap = true, silent = true })
 vim.api.nvim_buf_set_keymap(0, "n", "<Leader>]", ":NextLatexPreviewMode<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-F>", ":ObsidianFollowLink<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<S-Q>", ":ObsidianQuickSwitch<CR>", { noremap = true, silent = true })
 
 vim.g.vimtex_compiler_progname = "latex"
 vim.g.vimtex_view_method = "skim"
